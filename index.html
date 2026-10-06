@@ -47,6 +47,15 @@ ol.time ul{padding-left:1.1rem;color:var(--mute);margin:.5rem 0 0}
 .contact{text-align:center}
 .mail{font:800 clamp(1.3rem,5vw,2.4rem)/1.2 "Bricolage Grotesque",sans-serif;word-break:break-all}
 footer{padding:2rem 0;color:var(--mute);text-align:center;border-top:1px solid var(--line)}
+.term{margin-top:2.5rem;max-width:34rem;background:#0F1226;border-radius:14px;overflow:hidden;box-shadow:0 12px 30px rgba(22,26,51,.25)}
+.term .bar{display:flex;gap:.4rem;padding:.7rem 1rem;background:#1B1F3F}
+.term .bar i{width:11px;height:11px;border-radius:50%;background:#FF6B8B}
+.term .bar i:nth-child(2){background:#FFC857}.term .bar i:nth-child(3){background:#5EE0A0}
+.term pre{margin:0;padding:1.1rem 1.25rem;min-height:11.5rem;color:#E6E9FF;font:.95rem/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow-x:auto}
+.term .k{color:#7EE0B5;font-style:normal}.term .s{color:#FFB3D1;font-style:normal}
+.term .cur{display:inline-block;width:.55em;height:1.1em;background:#9AA5FF;vertical-align:text-bottom;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.term .cur{animation:none}}
 </style>
 </head>
 <body>
@@ -58,6 +67,7 @@ footer{padding:2rem 0;color:var(--mute);text-align:center;border-top:1px solid v
   <p>Analista de Suporte e Desenvolvedora. Transformo o conhecimento adquirido na solução de chamados em sistemas e automações que otimizam processos de forma ágil e eficiente.</p>
   <div class="facts"><span><b>Local</b>Rio de Janeiro, RJ</span><span><b>Atuação</b>Suporte, desenvolvimento e automação</span><span><b>Curso</b>Ciência da Computação</span></div>
   <div class="btns"><a class="btn main" href="#projetos">Ver projetos</a><a class="btn" href="#contato">Falar comigo</a></div>
+  <div class="term" aria-hidden="true"><div class="bar"><i></i><i></i><i></i></div><pre id="code"></pre></div>
 </header></div>
 
 <section id="sobre"><div class="wrap"><h2>Sobre mim</h2>
@@ -101,7 +111,7 @@ footer{padding:2rem 0;color:var(--mute);text-align:center;border-top:1px solid v
 
 <section id="formacao"><div class="wrap"><h2>Formação</h2>
 <div class="grid">
-<div class="card"><span class="chip">Cursando</span><h3>Ciência da Computação</h3><p>Nova Iguaçu, RJ<p>Faculdade IBMR</p>.
+<div class="card"><span class="chip">Cursando</span><h3>Ciência da Computação</h3><p>Faculdade IBMR</p></div>
 <div class="card"><span class="chip">Concluído</span><h3>Pós-graduação em Hematologia e Imuno-hematologia</h3><p>Faculdade Única</p></div>
 <div class="card"><span class="chip">Concluído</span><h3>Pós-graduação em Saúde Pública, ênfase em Saúde da Família</h3><p>Faculdade Única</p></div>
 <div class="card"><span class="chip">Concluído</span><h3>Graduação em Biomedicina</h3><p>Universidade Estácio de Sá</p></div>
@@ -127,6 +137,15 @@ document.getElementById("copy").onclick=function(){
   try{navigator.clipboard.writeText(t).then(function(){b.textContent="E-mail copiado"})}
   catch(e){b.textContent="Copie: "+t}
 };
+(function(){
+  var txt='const mariana = {\n  cargo: "Analista de Suporte e Desenvolvedora",\n  stack: ["Python", "SQL", "JavaScript", "React"],\n  foco: "automação e eficiência",\n  disponivel: true\n};',
+      pre=document.getElementById("code"),n=0;
+  function hl(t){return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/("[^"]*"?)/g,'<i class="s">$1</i>').replace(/\b(const|true)\b/g,'<i class="k">$1</i>')}
+  function draw(c){pre.innerHTML=hl(txt.slice(0,c))+'<span class="cur"></span>'}
+  if(window.matchMedia("(prefers-reduced-motion:reduce)").matches){draw(txt.length);return}
+  function tick(){draw(n);if(n<txt.length){n++;setTimeout(tick,n%7===0?120:45)}else{setTimeout(function(){n=0;tick()},3500)}}
+  tick();
+})();
 </script>
 </body>
 </html>
